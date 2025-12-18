@@ -27,8 +27,8 @@ This repository registers one or more Elementor widgets (canonical example: a ma
 
 - 1.0.1
 Added the Marqee:
-1. Top to Bottom
-2. Bottom to Top
+-- Top to Bottom
+-- Bottom to Top
 
 - 1.0.0
 Initial release. No upgrade steps required.
