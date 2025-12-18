@@ -1,0 +1,75 @@
+<?php
+/*
+Plugin Name: Elementor Elements by Codenitive
+Plugin URI:  https://github.com/gswebs/codenitive-elementor-elements
+Description: A collection of Elementor widgets and extensions for enhanced design and functionality.
+Version: 1.0.0
+Requires at least: 5.6
+Tested up to: 6.5
+Requires PHP: 7.4
+Requires Plugins: elementor
+Author: Codenitive
+Author URI: https://codenitive.com
+License: GPL v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: codenitive-elementor-elements
+Domain Path: /languages
+*/
+
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
+
+/**
+ * Check if Elementor is loaded
+ */
+add_action( 'plugins_loaded', function () {
+    if ( ! did_action( 'elementor/loaded' ) ) {
+        return;
+    }
+});
+
+/**
+ * Register widgets
+ */
+add_action( 'elementor/widgets/register', function( $widgets_manager ) {
+
+    $widget_file = plugin_dir_path( __FILE__ ) . 'includes/widgets/marquee.php';
+
+    if ( file_exists( $widget_file ) ) {
+        require_once $widget_file;
+
+        if ( class_exists( 'Codenit_Marquee_List_Widget' ) ) {
+            $widgets_manager->register( new \Codenit_Marquee_List_Widget() );
+        }
+    }
+});
+
+/**
+ * Register frontend styles
+ */
+add_action( 'wp_enqueue_scripts', function () {
+
+    $css_path = plugin_dir_path( __FILE__ ) . 'assets/css/marquee.css';
+    $css_url  = plugin_dir_url( __FILE__ ) . 'assets/css/marquee.css';
+
+    wp_register_style(
+        'codenitive-marquee',
+        $css_url,
+        [],
+        file_exists( $css_path ) ? filemtime( $css_path ) : '1.0.0'
+    );
+});
+
+/**
+ * Enqueue styles only when Elementor frontend is active
+ */
+add_action( 'elementor/frontend/after_enqueue_styles', function () {
+    wp_enqueue_style( 'codenitive-marquee' );
+});
+/**
+ * Load text domain for translations
+ */
+add_action( 'plugins_loaded', function () {
+    load_plugin_textdomain( 'codenitive-elementor-elements', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+});
