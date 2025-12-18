@@ -20,12 +20,15 @@ This repository registers one or more Elementor widgets (canonical example: a ma
 
 ## Changelog
 
-### [1.0.1] – 2025-01-18
-#### Added
-- Marquee animation directions:
-  - Top to Bottom
-  - Bottom to Top
+- 1.0.0
+ Initial release: marquee/image-list widget, style registration, and textdomain loading.
 
-### [1.0.0] – 2025-01-15
-#### Added
-- Initial release
+## Upgrade Notice
+
+- 1.0.1
+Added the Marqee:
+1. Top to Bottom
+2. Bottom to Top
+
+- 1.0.0
+Initial release. No upgrade steps required.
