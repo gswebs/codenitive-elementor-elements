@@ -104,14 +104,14 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
         );
         
         $this->add_control(
-            'marquee_direction',
+            'marquee_axis',
             [
-                'label'     => __( 'Direction', 'textdomain' ),
-                'type'      => Controls_Manager::SELECT,
-                'default'   => 'rtl',
-                'options'   => [
-                    'reverse' => __( 'Right to Left', 'textdomain' ),
-                    'normal' => __( 'Left to Right', 'textdomain' ),
+                'label' => __( 'Scroll Axis', 'textdomain' ),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'horizontal',
+                'options' => [
+                    'horizontal' => 'Left ↔ Right',
+                    'vertical'   => 'Top ↕ Bottom',
                 ],
                 'condition' => [
                     'enable_marquee' => 'yes',
@@ -119,6 +119,22 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
             ]
         );
         
+        $this->add_control(
+            'marquee_direction',
+            [
+                'label' => __( 'Direction', 'textdomain' ),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'normal',
+                'options' => [
+                    'normal'  => 'Top → Bottom / Left → Right',
+                    'reverse' => 'Bottom → Top / Right → Left',
+                ],
+                'condition' => [
+                    'enable_marquee' => 'yes',
+                ],
+            ]
+        );
+
         $this->add_control(
             'marquee_speed',
             [
@@ -153,9 +169,9 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
                     '%' => ['min' => 5, 'max' => 100],
                     'px' => ['min' => 50, 'max' => 600],
                 ],
-                'default' => ['size' => 20, 'unit' => '%'],
+                'default' => ['size' => '250', 'unit' => 'px'],
                 'selectors' => [
-                    '{{WRAPPER}} .codenit-marquee-item' => 'flex: 0 0 {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .codenit-marquee-item' => 'width: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -166,7 +182,7 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
                 'label' => __( 'Background Color', 'textdomain' ),
                 'type'  => Controls_Manager::COLOR,
                 'selectors' => [
-                    '{{WRAPPER}} .codenit-marquee-item' => 'background-color: {{VALUE}};',
+                    '{{WRAPPER}} .codenit-marquee-content' => 'background-color: {{VALUE}};',
                 ],
             ]
         );
@@ -188,7 +204,7 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .codenit-marquee-item' =>
+                    '{{WRAPPER}} .codenit-marquee-content' =>
                         'border-radius: {{SIZE}}{{UNIT}};',
                 ],
             ]
@@ -201,7 +217,7 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
                 'type'  => Controls_Manager::DIMENSIONS,
                 'size_units' => [ 'px', 'em', '%' ],
                 'selectors' => [
-                    '{{WRAPPER}} .codenit-marquee-item' =>
+                    '{{WRAPPER}} .codenit-marquee-content' =>
                         'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                 ],
             ]
@@ -220,7 +236,7 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} .codenit-marquee' => 'gap: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .codenit-marquee-item' => 'padding-inline: {{SIZE}}{{UNIT}};',
                 ],
             ]
         );
@@ -248,7 +264,11 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
         
         $enable_marquee = $settings['enable_marquee'] === 'yes';
         $direction      = $settings['marquee_direction'] ?? 'normal';
-        $speed          = $settings['marquee_speed'] ?? 15;
+        
+        $axis = $settings['marquee_axis'] ?? 'horizontal'; // horizontal | vertical
+        $direction = $settings['marquee_direction'] ?? 'normal';
+        
+        $speed  = $settings['marquee_speed'] ?? 15;
         $item_size = $settings['item_size'] ?? [
             'size' => 20,
             'unit' => '%',
@@ -260,21 +280,42 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
         $classes = [ 'elementor-image-list' ];
         
         if ( $enable_marquee ) {
-            $classes[] = 'is-marquee';
-            $classes[] = 'codenit-marquee-' . esc_attr( $direction );
-            $classes[] = 'codenit-marquee';
+            $classes = [
+                'elementor-image-list',
+                'codenit-marquee',
+                'is-marquee',
+                'codenit-marquee-' . $axis,
+                'codenit-marquee-' . $direction,
+            ];
         }
         
         ?>
-        <div class="codenit-marquee-wrapper">
+        <div class="codenit-marquee-wrapper marqueue-fadeout-horizontal">
             <ul class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
-                style="--marquee-speed: <?php echo esc_attr( $speed ); ?>s; --direction: <?php echo esc_attr( $direction ); ?>; --item-width: <?php echo esc_attr( $size ); ?><?php echo esc_attr( $unit ); ?>
-;">
+                style="--marquee-speed: <?php echo esc_attr( $speed ); ?>s; --direction: <?php echo esc_attr( $direction ); ?>;">
                 
                 <?php foreach ( $settings['items'] as $item ) : ?>
                     <li class="codenit-marquee-item elementor-image-list-item">
-                        <?php echo Group_Control_Image_Size::get_attachment_image_html( $item, 'item_image', 'image' ); ?>
-                        <span><?php echo esc_html( $item['title'] ); ?></span>
+                        <div class="codenit-marquee-content">
+                            <?php do_action('codenit_before_marqee_image', $item); ?>
+                            <?php
+                                $image_id = $item['image']['id'] ?? 0;
+                                
+                                if ( $image_id ) {
+                                    echo wp_get_attachment_image(
+                                        $image_id,
+                                        $settings['item_image_size'],
+                                        false,
+                                        [
+                                            'loading' => 'eager',
+                                            'decoding' => 'sync',
+                                        ]
+                                    );
+                                }
+                            ?>
+                            <span><?php echo esc_html( $item['title'] ); ?></span>
+                            <?php do_action('codenit_after_marqee_title', $item); ?>
+                        </div>
                     </li>
                 <?php endforeach; ?>
         
@@ -282,8 +323,26 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
                     <!-- Duplicate for seamless loop -->
                     <?php foreach ( $settings['items'] as $item ) : ?>
                         <li aria-hidden="true" class="codenit-marquee-item elementor-image-list-item">
-                            <?php echo Group_Control_Image_Size::get_attachment_image_html( $item, 'item_image', 'image' ); ?>
-                            <span><?php echo esc_html( $item['title'] ); ?></span>
+                            <div class="codenit-marquee-content">
+                                <?php do_action('codenit_before_marqee_image', $item); ?>
+                                <?php
+                                    $image_id = $item['image']['id'] ?? 0;
+                                    
+                                    if ( $image_id ) {
+                                        echo wp_get_attachment_image(
+                                            $image_id,
+                                            $settings['item_image_size'],
+                                            false,
+                                            [
+                                                'loading' => 'eager',
+                                                'decoding' => 'sync',
+                                            ]
+                                        );
+                                    }
+                                ?>
+                                <span><?php echo esc_html( $item['title'] ); ?></span>
+                                <?php do_action('codenit_after_marqee_title', $item); ?>
+                            </div>
                         </li>
                     <?php endforeach; ?>
                 <?php endif; ?>

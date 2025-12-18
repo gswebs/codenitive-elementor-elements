@@ -44,6 +44,11 @@ Open the widget in the Elementor editor, toggle "Enable Marquee", then set the "
 
 == Upgrade Notice ==
 
+= 1.0.1 =
+Added the Marqee:
+Top to Bottom
+Bottom to Top
+
 = 1.0.0 =
 Initial release. No upgrade steps required.
 
