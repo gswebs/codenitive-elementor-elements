@@ -1,0 +1,61 @@
+.elementor-widget-codenit_all_reviews{
+    width: 100%;
+}
+.codenit-reviews-list {
+    display: grid;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.codenit-review {
+  padding: 20px;
+  border: 1px solid #BCC1BA;
+  border-radius: 30px;
+}
+
+.comment-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.cimg {
+    display: flex;
+}
+.comment-text > * {
+    margin-bottom: 8px;
+}
+.cauthor {
+    width: 100%;
+}
+.ccheckmark {
+    display: flex;
+    justify-content: end;
+    width: 16px;
+}
+.cstar {
+    display: inline-flex;
+    gap: 5px;
+    align-items: center;
+}
+.cstar-txt, .cmeta {
+    font-size: 0.8rem;
+    font-style: italic;
+}
+.codenit-pagination > * {
+    display: inline-block;
+    margin-block-end: 10px !important;
+}
+.codenit-reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+@media (max-width: 768px){
+    .codenit-reviews-header {
+        flex-direction: column-reverse;
+    }
+}
