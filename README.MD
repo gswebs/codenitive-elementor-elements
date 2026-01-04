@@ -39,6 +39,10 @@ The plugin follows a minimal and modular design, allowing easy extension for fut
 
 ## Changelog
 
+### 1.0.3
+- Added the link option in the Marquee 1 widget items
+- Added the new widget name Show All Button to link the sections to their related pages.
+
 ### 1.0.2
 - Added WooCommerce product reviews widget
 
@@ -50,6 +54,15 @@ The plugin follows a minimal and modular design, allowing easy extension for fut
 
 ## Upgrade Notice
 
-- 1.0.2: Adds WooCommerce reviews widget. No migration needed.  
-- 1.0.1: Adds marquee direction options. No migration needed.  
-- 1.0.0: Initial release. No upgrade steps required.  
+### 1.0.3
+- Added the link option in the Marquee 1 widget items
+- Added the new widget name Show All Button to link the sections to their related pages.
+
+### 1.0.2 
+- Adds WooCommerce reviews widget. No migration needed.  
+
+### 1.0.1
+- Adds marquee direction options. No migration needed.  
+
+### 1.0.0 
+- Initial release. No upgrade steps required.  

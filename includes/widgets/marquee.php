@@ -69,6 +69,21 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
                 'rows'  => 3,
             ]
         );
+        
+        $repeater->add_control(
+            'link',
+            [
+                'label' => __( 'Link', 'textdomain' ),
+                'type' => Controls_Manager::URL,
+                'placeholder' => __( 'https://your-link.com', 'textdomain' ),
+                'show_external' => true, // allow target="_blank"
+                'default' => [
+                    'url' => '',
+                    'is_external' => false,
+                    'nofollow' => false,
+                ],
+            ]
+        );
 
         $this->add_control(
             'items',
@@ -295,34 +310,53 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
                 style="--marquee-speed: <?php echo esc_attr( $speed ); ?>s; --direction: <?php echo esc_attr( $direction ); ?>;">
                 
                 <?php foreach ( $settings['items'] as $item ) : ?>
-                    <li class="codenit-marquee-item elementor-image-list-item">
-                        <div class="codenit-marquee-content">
-                            <?php do_action('codenit_before_marqee_image', $item); ?>
-                            <?php
-                                $image_id = $item['image']['id'] ?? 0;
-                                
-                                if ( $image_id ) {
-                                    echo wp_get_attachment_image(
-                                        $image_id,
-                                        $settings['item_image_size'],
-                                        false,
-                                        [
-                                            'loading' => 'eager',
-                                            'decoding' => 'sync',
-                                        ]
-                                    );
-                                }
-                            ?>
-                            <span><?php echo esc_html( $item['title'] ); ?></span>
-                            <?php do_action('codenit_after_marqee_title', $item); ?>
-                        </div>
-                    </li>
+                <?php 
+                    $url = $item['link']['url'] ?? '';
+                    $target = $item['link']['is_external'] ? ' target="_blank"' : '';
+                    $nofollow = $item['link']['nofollow'] ? ' rel="nofollow"' : '';
+                ?>
+                <li class="codenit-marquee-item elementor-image-list-item">
+                    <?php if ( $url ) : ?>
+                        <a href="<?php echo esc_url($url); ?>"<?php echo $target . $nofollow; ?>>
+                    <?php endif; ?>
+                    <div class="codenit-marquee-content">
+                        <?php do_action('codenit_before_marqee_image', $item); ?>
+                        <?php
+                            $image_id = $item['image']['id'] ?? 0;
+                            
+                            if ( $image_id ) {
+                                echo wp_get_attachment_image(
+                                    $image_id,
+                                    $settings['item_image_size'],
+                                    false,
+                                    [
+                                        'loading' => 'eager',
+                                        'decoding' => 'sync',
+                                    ]
+                                );
+                            }
+                        ?>
+                        <span><?php echo esc_html( $item['title'] ); ?></span>
+                        <?php do_action('codenit_after_marqee_title', $item); ?>
+                    </div>
+                    <?php if ( $url ) : ?>
+                        </a>
+                    <?php endif; ?>
+                </li>
                 <?php endforeach; ?>
         
                 <?php if ( $enable_marquee ) : ?>
                     <!-- Duplicate for seamless loop -->
                     <?php foreach ( $settings['items'] as $item ) : ?>
+                    <?php 
+                        $url = $item['link']['url'] ?? '';
+                        $target = $item['link']['is_external'] ? ' target="_blank"' : '';
+                        $nofollow = $item['link']['nofollow'] ? ' rel="nofollow"' : '';
+                    ?>
                         <li aria-hidden="true" class="codenit-marquee-item elementor-image-list-item">
+                            <?php if ( $url ) : ?>
+                                <a href="<?php echo esc_url($url); ?>"<?php echo $target . $nofollow; ?>>
+                            <?php endif; ?>
                             <div class="codenit-marquee-content">
                                 <?php do_action('codenit_before_marqee_image', $item); ?>
                                 <?php
@@ -343,6 +377,9 @@ class Codenit_Marquee_List_Widget extends Widget_Base {
                                 <span><?php echo esc_html( $item['title'] ); ?></span>
                                 <?php do_action('codenit_after_marqee_title', $item); ?>
                             </div>
+                            <?php if ( $url ) : ?>
+                                </a>
+                            <?php endif; ?>
                         </li>
                     <?php endforeach; ?>
                 <?php endif; ?>

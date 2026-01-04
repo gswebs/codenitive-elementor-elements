@@ -5,7 +5,7 @@ Tags: elementor, widgets, marquee, image, design, woocommerce, reviews
 Requires at least: 5.6
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,10 @@ Yes, the WooCommerce reviews widget allows:
 
 == Changelog ==
 
+= 1.0.3 =
+* Added the link option in the Marquee 1 widget items
+* Added the new widget name Show All Button to link the sections to their related pages.
+
 = 1.0.2 =
 * Added WooCommerce product reviews widget
 
@@ -62,5 +66,6 @@ Yes, the WooCommerce reviews widget allows:
 
 == Upgrade Notice ==
 
-= 1.0.2 =
-Adds WooCommerce reviews widget. No migration needed.
+= 1.0.3 =
+* Added the link option in the Marquee 1 widget items
+* Added the new widget name Show All Button to link the sections to their related pages.
