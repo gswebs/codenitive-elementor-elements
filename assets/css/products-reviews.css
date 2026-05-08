@@ -59,3 +59,102 @@
         flex-direction: column-reverse;
     }
 }
+
+/* Carousel */
+.swiper-pagination {
+    position: relative !important;
+    text-align: center !important;
+    bottom: 0px !important;
+    margin: 10px 0;
+}
+.codenit-swiper {
+    overflow: hidden;
+}
+
+.codenit-swiper .swiper-wrapper {
+    align-items: center;
+}
+
+.codenit-swiper .codenit-review > * {
+    text-align: center;
+}
+
+.codenit-swiper .comment-head {
+    justify-content: center;
+}
+
+.comment-head span{
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.codenit-swiper .codenit-review {
+    transition:
+        transform 0.45s ease,
+        opacity 0.45s ease,
+        scale 0.45s ease;
+}
+
+/* Active Slide */
+.codenit-swiper .swiper-slide-active .codenit-review {
+    z-index: 2;
+}
+
+
+/* Top Area */
+.codenit-review .review-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    width: 246px;
+    margin: 0 auto 30px;
+}
+
+.cproduct-title {
+    margin-bottom: 10px;
+    line-height: 16px;
+}
+
+/* Product Image */
+.codenit-review .review-product-image img {
+    width: 100px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Product Info */
+.codenit-review .review-top-content {
+    text-align: left;
+}
+
+.cdescription p {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 100%;
+}
+
+.codenit-review .cproduct-title a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.codenit-review-button-wrap {
+    text-align: center;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    margin-block: 20px;
+}
+.codenit-swiper .swiper-pagination {
+    position: relative;
+    bottom: auto !important;
+    margin-top: 30px;
+}
+
+.codenit-swiper .swiper-pagination-bullet {
+    transition: all 0.3s ease;
+}

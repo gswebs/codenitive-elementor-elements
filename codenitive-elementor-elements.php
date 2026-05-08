@@ -3,7 +3,7 @@
 Plugin Name: Elementor Elements by Codenitive
 Plugin URI:  https://github.com/gswebs/codenitive-elementor-elements
 Description: A collection of Elementor widgets and extensions for enhanced design and functionality.
-Version: 1.0.3
+Version: 1.0.4
 Requires at least: 5.6
 Tested up to: 6.5
 Requires PHP: 7.4
@@ -61,6 +61,16 @@ add_action( 'elementor/widgets/register', function( $widgets_manager ) {
 
         if ( class_exists( 'CodeNit_All_Reviews_Widget' ) ) {
             $widgets_manager->register( new \Codenit_Elementor_ShowAll() );
+        }
+    }
+
+    $reviews_car_file = plugin_dir_path( __FILE__ ) . 'includes/widgets/products-reviews-carousel.php';
+
+    if ( file_exists( $reviews_car_file ) ) {
+        require_once $reviews_car_file;
+
+        if ( class_exists( 'CodeNit_All_Reviews_Carousel_Widget' ) ) {
+            $widgets_manager->register( new \CodeNit_All_Reviews_Carousel_Widget() );
         }
     }
     
