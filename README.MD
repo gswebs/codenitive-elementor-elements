@@ -39,6 +39,9 @@ The plugin follows a minimal and modular design, allowing easy extension for fut
 
 ## Changelog
 
+### 1.0.4
+- Added the WooCommerce Reviews Carousel Widget
+
 ### 1.0.3
 - Added the link option in the Marquee 1 widget items
 - Added the new widget name Show All Button to link the sections to their related pages.
@@ -53,6 +56,9 @@ The plugin follows a minimal and modular design, allowing easy extension for fut
 - Initial release: marquee/image-list widget, style registration, and textdomain loading
 
 ## Upgrade Notice
+
+### 1.0.4
+- Added the WooCommerce Reviews Carousel Widget
 
 ### 1.0.3
 - Added the link option in the Marquee 1 widget items

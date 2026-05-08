@@ -5,7 +5,7 @@ Tags: elementor, widgets, marquee, image, design, woocommerce, reviews
 Requires at least: 5.6
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,6 +51,9 @@ Yes, the WooCommerce reviews widget allows:
 
 == Changelog ==
 
+= 1.0.4 =
+* Added the WooCommerce Reviews Carousel Widget
+
 = 1.0.3 =
 * Added the link option in the Marquee 1 widget items
 * Added the new widget name Show All Button to link the sections to their related pages.
@@ -65,6 +68,9 @@ Yes, the WooCommerce reviews widget allows:
 * Initial release: marquee/image-list widget, style registration, and textdomain loading
 
 == Upgrade Notice ==
+
+= 1.0.4 =
+* Added the WooCommerce Reviews Carousel Widget
 
 = 1.0.3 =
 * Added the link option in the Marquee 1 widget items
