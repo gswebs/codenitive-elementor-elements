@@ -32,5 +32,6 @@ Thumbs.db
 
 # Git itself
 .git
+.github
 .gitignore
 .gitattributes
